@@ -1,0 +1,37 @@
+{% extends 'base.html' %}{% block content %}
+<section class="hero">
+  <div><h1>Sistema de certificación digital</h1><p>ID automático, QR de verificación y PDF descargable.</p></div>
+  <img src="{{ url_for('static', filename='img/logo_forja.png') }}" class="logo" alt="Forja Laboral">
+</section>
+{% with messages = get_flashed_messages() %}{% if messages %}<div class="ok">{{ messages[0] }}</div>{% endif %}{% endwith %}
+<section class="card">
+  <h2>Crear certificado</h2>
+  <form method="post" action="/crear" class="form">
+    <input type="hidden" name="key" value="{{ key }}">
+    <label>Nombre alumno<input name="nombre" required></label>
+    <label>RUT<input name="rut" placeholder="12.345.678-9"></label>
+    <label>Correo<input name="correo" type="email"></label>
+    <label>Curso<input name="curso" required placeholder="Ej: Operador Grúa Horquilla"></label>
+    <label>Nivel<input name="nivel" placeholder="Básico / Medio / Avanzado"></label>
+    <label>Horas<input name="horas" type="number" min="1"></label>
+    <label>Nota final<input name="nota_final" placeholder="Ej: 6.5"></label>
+    <label>Fecha inicio<input name="fecha_inicio" type="date"></label>
+    <label>Fecha término<input name="fecha_termino" type="date" required></label>
+    <label>Instructor<input name="instructor"></label>
+    <label>Empresa<input name="empresa"></label>
+    <label>Estado<select name="estado"><option>VIGENTE</option><option>VENCIDO</option><option>ANULADO</option></select></label>
+    <button>Crear certificado + QR + PDF</button>
+  </form>
+</section>
+<section class="card">
+  <h2>Certificados emitidos</h2>
+  <div class="table">
+    <table><thead><tr><th>ID</th><th>Alumno</th><th>Curso</th><th>Estado</th><th>Verificar</th><th>PDF</th></tr></thead>
+    <tbody>{% for a in alumnos %}<tr>
+      <td>{{ a.alumno_id }}</td><td>{{ a.nombre }}</td><td>{{ a.curso }}</td><td><span class="badge">{{ a.estado }}</span></td>
+      <td><a href="/verificar/{{ a.codigo_verificacion }}" target="_blank">Abrir QR</a></td>
+      <td><a href="/certificados/{{ a.codigo_verificacion }}/pdf">Descargar</a></td>
+    </tr>{% endfor %}</tbody></table>
+  </div>
+</section>
+{% endblock %}

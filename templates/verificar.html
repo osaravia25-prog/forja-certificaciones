@@ -1,0 +1,16 @@
+{% extends 'base.html' %}{% block content %}
+<section class="card verify">
+  <img src="{{ url_for('static', filename='img/logo_forja.png') }}" class="logo" alt="Forja Laboral">
+  <h1>Certificado {{ alumno.estado }}</h1>
+  <p class="lead">Este certificado fue encontrado en el sistema de verificación digital.</p>
+  <dl>
+    <dt>ID alumno</dt><dd>{{ alumno.alumno_id }}</dd>
+    <dt>Nombre</dt><dd>{{ alumno.nombre }}</dd>
+    <dt>RUT</dt><dd>{{ alumno.rut or 'No informado' }}</dd>
+    <dt>Curso</dt><dd>{{ alumno.curso }}</dd>
+    <dt>Fecha término</dt><dd>{{ alumno.fecha_termino }}</dd>
+    <dt>Código</dt><dd>{{ alumno.codigo_verificacion }}</dd>
+  </dl>
+  <a class="button" href="/certificados/{{ alumno.codigo_verificacion }}/pdf">Descargar certificado PDF</a>
+</section>
+{% endblock %}

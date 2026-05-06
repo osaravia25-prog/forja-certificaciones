@@ -1,0 +1,11 @@
+{% extends 'base.html' %}{% block content %}
+<section class="card small">
+  <img src="{{ url_for('static', filename='img/logo_forja.png') }}" class="logo" alt="Forja Laboral">
+  <h1>Panel de certificados</h1>
+  <p>Ingresa con tu clave administrativa.</p>
+  <form method="get" action="/admin" class="grid">
+    <input name="key" placeholder="Clave admin" required>
+    <button>Entrar</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,20 @@
+SISTEMA DE CERTIFICACIÓN DIGITAL FORJA
+
+1) Abrir esta carpeta en Visual Studio Code.
+
+2) Abrir terminal y ejecutar:
+   py -3.12 -m pip install flask qrcode reportlab pillow
+
+3) Ejecutar el sistema:
+   py -3.12 app.py
+
+4) Abrir en Chrome:
+   http://127.0.0.1:5000/admin?key=cambia-esta-clave
+
+Clave admin:
+   cambia-esta-clave
+
+IMPORTANTE:
+- No cerrar la terminal mientras uses el sistema.
+- El sistema genera ID automático, QR y certificado PDF.
+- Los certificados quedan en la carpeta certificados.
