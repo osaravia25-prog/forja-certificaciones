@@ -1,0 +1,19 @@
+FORJA WEB PRO FINAL
+
+Mejoras aplicadas:
+- Menú público más limpio y profesional.
+- Eliminado enlace Admin visible al público.
+- Botón “Verificar certificado” conectado a Render.
+- Sección nueva de validación digital con QR/código único.
+- Textos legales suavizados para evitar afirmar acreditaciones si no corresponde.
+- Corrección de fondos CSS que apuntaban a imágenes inexistentes.
+- Mejoras responsive para celular.
+- Página verificar-certificado.html con redirección al sistema de certificados.
+
+URL sistema certificados:
+https://forja-certificaciones.onrender.com
+
+Para subir a Netlify:
+1. Arrastrar esta carpeta completa a Netlify o reemplazar el deploy desde Git.
+2. Verificar que index.html esté en la raíz.
+3. Probar menú, cursos, portal alumnos y botón Verificar certificado.

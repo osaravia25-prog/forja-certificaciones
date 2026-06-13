@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Verificación pública de certificados emitidos por OTEC Forja Laboral Chile." />
+  <title>Verificar certificado – Forja Laboral</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .verify-page {
+      min-height: 100vh;
+      background:
+        linear-gradient(135deg, rgba(15,23,42,.92), rgba(30,41,59,.88)),
+        url('img/fondo-mineria.png') center/cover no-repeat;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+    .verify-main {
+      width: min(960px, calc(100% - 32px));
+      margin: 40px auto 70px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+    .verify-card, .verify-info {
+      background: rgba(255,255,255,.94);
+      color: #111827;
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 22px 50px rgba(0,0,0,.32);
+      border: 1px solid rgba(255,255,255,.35);
+    }
+    .verify-card h1 {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.05;
+      color: #0f172a;
+    }
+    .verify-card p {
+      color: #475569;
+      font-size: 1.03rem;
+      line-height: 1.65;
+    }
+    .verify-form {
+      display: grid;
+      gap: 14px;
+      margin-top: 22px;
+    }
+    .verify-form label {
+      font-weight: 800;
+      color: #1f2937;
+    }
+    .verify-form input {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 15px 16px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      outline: none;
+      background: #f8fafc;
+    }
+    .verify-form input:focus {
+      border-color: #b68b2c;
+      box-shadow: 0 0 0 4px rgba(182,139,44,.18);
+    }
+    .verify-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .verify-error {
+      display: none;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #fee2e2;
+      color: #991b1b;
+      font-weight: 700;
+    }
+    .verify-info h2 {
+      margin-top: 0;
+      color: #0f172a;
+    }
+    .verify-info ul {
+      padding-left: 20px;
+      line-height: 1.8;
+      color: #334155;
+    }
+    .verify-safe {
+      margin-top: 18px;
+      background: #ecfdf5;
+      color: #065f46;
+      padding: 14px;
+      border-radius: 14px;
+      font-weight: 700;
+    }
+    .verify-top {
+      width: min(1120px, calc(100% - 32px));
+      margin: 24px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .verify-top img {
+      height: 54px;
+      width: auto;
+      object-fit: contain;
+    }
+    .verify-top a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+    }
+    @media (max-width: 820px) {
+      .verify-main {
+        grid-template-columns: 1fr;
+        margin-top: 24px;
+      }
+      .verify-card, .verify-info {
+        padding: 22px;
+      }
+      .verify-top {
+        align-items: flex-start;
+      }
+    }
+  </style>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#b68b2c">
+</head>
+<body class="verify-page">
+  <header class="verify-top">
+    <a href="index.html" aria-label="Volver al inicio">
+      <img src="img/logo_forja_sin_fondo.png" alt="Forja Laboral" />
+    </a>
+    <a href="index.html">Volver al inicio</a>
+  </header>
+
+  <main class="verify-main">
+    <section class="verify-card">
+      <h1>Verificar certificado</h1>
+      <p>
+        Ingresa el código único que aparece en el certificado digital o escanea el código QR del diploma.
+        Esta sección es pública y solo permite consultar el estado del certificado.
+      </p>
+
+      <form class="verify-form" id="verifyForm">
+        <label for="codigo">Código de verificación</label>
+        <input id="codigo" name="codigo" placeholder="Ej: A1B2C3D4E5F6" autocomplete="off" />
+        <div class="verify-actions">
+          <button class="btn btn-primary" type="submit">Verificar certificado</button>
+          <a class="btn btn-secondary" href="portal-alumnos.html">Portal alumnos</a>
+        </div>
+        <div class="verify-error" id="verifyError">
+          Ingresa un código válido para continuar.
+        </div>
+      </form>
+    </section>
+
+    <aside class="verify-info">
+      <h2>¿Qué información muestra?</h2>
+      <ul>
+        <li>Nombre del alumno certificado.</li>
+        <li>Curso aprobado.</li>
+        <li>Fecha de término.</li>
+        <li>Estado del certificado.</li>
+        <li>Descarga del PDF, si corresponde.</li>
+      </ul>
+      <div class="verify-safe">
+        El panel administrador no está disponible para alumnos ni empresas.
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    const CERT_BASE_URL = "";
+
+    document.getElementById("verifyForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const input = document.getElementById("codigo");
+      const error = document.getElementById("verifyError");
+      const codigo = input.value.trim().replace(/\s+/g, "").toUpperCase();
+
+      if (!codigo || codigo.length < 6) {
+        error.style.display = "block";
+        return;
+      }
+
+      error.style.display = "none";
+      window.location.href = "/verificar/" + encodeURIComponent(codigo);
+    });
+  </script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/service-worker.js').catch(()=>{});}</script>
+</body>
+</html>

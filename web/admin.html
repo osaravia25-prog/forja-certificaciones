@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Admin – OTEC Forja Laboral Chile</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<link href="styles.css" rel="stylesheet"/>
+<style>
+    .admin-wrap { max-width: 1100px; margin: 2rem auto; padding: 0 1.25rem; }
+    .admin-card { background: rgba(255,255,255,0.95); border-radius: 1rem; padding: 1.5rem; box-shadow: 0 12px 26px rgba(0,0,0,0.22); }
+    .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .admin-grid .full { grid-column: 1 / -1; }
+    .admin-card label { display:block; font-weight:600; margin: 0.25rem 0; }
+    .admin-card input { width:100%; padding:0.7rem 0.8rem; border-radius:0.6rem; border:1px solid #cbd5e1; background:#f8fafc; }
+    .admin-actions { display:flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; align-items:center; }
+    .admin-msg { margin-top: 1rem; padding: 0.75rem 0.9rem; border-radius: 0.75rem; background:#e5e7eb; }
+    .admin-msg.ok { background:#dcfce7; color:#166534; }
+    .admin-msg.error { background:#fee2e2; color:#b91c1c; }
+    .admin-note { margin-top: 10px; font-size: 0.95rem; opacity: .85; }
+    .hidden-storage { display:none; } /* Plan A: oculto */
+    @media (max-width: 900px) { .admin-grid { grid-template-columns: 1fr; } }
+  </style>
+
+<style>
+  body.admin-locked > *:not(#adminAccessGate) { display: none !important; }
+  #adminAccessGate {
+    min-height: 100vh; display: grid; place-items: center; padding: 24px;
+    background: linear-gradient(135deg, rgba(15,23,42,.94), rgba(30,41,59,.90)), url('img/fondo-mineria.png') center/cover no-repeat;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .admin-gate-card {
+    width: min(430px, 100%); background: #ffffff; border-radius: 22px; padding: 30px;
+    box-shadow: 0 25px 60px rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.35); color: #111827;
+  }
+  .admin-gate-card img { display: block; max-width: 160px; max-height: 80px; object-fit: contain; margin: 0 auto 18px; }
+  .admin-gate-card h1 { margin: 0 0 8px; font-size: 1.7rem; text-align: center; color: #0f172a; }
+  .admin-gate-card p { margin: 0 0 20px; color: #475569; text-align: center; line-height: 1.5; }
+  .admin-gate-card label { display: block; font-weight: 800; margin-bottom: 8px; color: #1f2937; }
+  .admin-gate-card input {
+    width: 100%; border: 1px solid #cbd5e1; border-radius: 14px; padding: 14px 15px;
+    font-size: 1rem; outline: none; box-sizing: border-box; background: #f8fafc;
+  }
+  .admin-gate-card input:focus { border-color: #b68b2c; box-shadow: 0 0 0 4px rgba(182,139,44,.18); }
+  .admin-gate-card button {
+    width: 100%; margin-top: 14px; padding: 14px 18px; border: 0; border-radius: 14px;
+    background: #b68b2c; color: #111827; font-weight: 900; cursor: pointer; font-size: 1rem;
+  }
+  .admin-gate-error {
+    display: none; margin-top: 12px; padding: 12px; border-radius: 12px;
+    background: #fee2e2; color: #991b1b; font-weight: 800; text-align: center;
+  }
+  .admin-gate-note { margin-top: 16px !important; font-size: .86rem; color: #64748b !important; }
+  .admin-logout-btn {
+    position: fixed; right: 16px; bottom: 16px; z-index: 9999; border: 0; border-radius: 999px;
+    padding: 11px 15px; background: #111827; color: #fff; font-weight: 800; cursor: pointer;
+    box-shadow: 0 14px 32px rgba(0,0,0,.25);
+  }
+</style>
+
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#b68b2c">
+</head>
+<body class="page-portal admin-locked">
+
+<div id="adminAccessGate">
+  <div class="admin-gate-card">
+    <img src="img/logo_forja_sin_fondo.png" alt="Forja Laboral" />
+    <h1>Acceso administrador portal alumnos</h1>
+    <p>Área interna para gestión de alumnos generales, claves y documentos PDF del portal. No entregar esta clave a alumnos ni empresas.</p>
+    <form id="adminGateForm">
+      <label for="adminGatePassword">Clave de acceso</label>
+      <input id="adminGatePassword" type="password" placeholder="Ingresa la clave" autocomplete="current-password" />
+      <button type="submit">Ingresar al panel</button>
+      <div class="admin-gate-error" id="adminGateError">Clave incorrecta.</div>
+    </form>
+    <p class="admin-gate-note">Protección básica para acceso interno en sitio estático.</p>
+  </div>
+</div>
+
+<header class="main-header">
+<div class="logo">
+<img alt="Forja Laboral OTEC Chile" class="logo-img" src="img/logo.png"/>
+<div class="logo-text">
+<span class="logo-title">OTEC FORJA</span>
+<span class="logo-subtitle">LABORAL Chile</span>
+</div>
+</div>
+<button aria-expanded="false" aria-label="Abrir menú" class="nav-toggle" type="button">
+<i class="fa-solid fa-bars"></i>
+</button>
+<nav class="main-nav">
+<a href="index.html#inicio">Inicio</a>
+<a href="cursos.html">Cursos</a>
+<a href="portal-alumnos.html">Portal alumnos</a>
+</nav>
+</header>
+<section class="page-hero page-hero-portal">
+<div class="page-hero-inner">
+<h1>Administrador</h1>
+<p>Gestiona alumnos y agrega documentos por URL (Plan A: gratis).</p>
+</div>
+</section>
+<!-- LOGIN SIEMPRE VISIBLE -->
+<section class="section">
+<div class="section-inner" style="max-width:900px;">
+<h2>Admin – Documentos por alumno</h2>
+<div class="card" style="max-width:420px;">
+<h3>Login Admin</h3>
+<input id="adminEmail" placeholder="Correo admin" type="email"/>
+<input id="adminPass" placeholder="Contraseña" type="password"/>
+<div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+<button class="btn btn-primary" id="btnLoginAdmin" type="button">Ingresar</button>
+<button class="btn btn-outline" id="btnLogoutAdmin" style="display:none;" type="button">Cerrar sesión</button>
+</div>
+<p class="portal-mensaje" id="adminLoginMsg"></p>
+</div>
+</div>
+</section>
+<!-- PANEL ADMIN (OCULTO HASTA LOGIN) -->
+<section class="section" id="adminPanel" style="display:none;">
+<div class="section-inner" style="max-width:1100px;">
+<!-- BLOQUE A: BUSCAR + AGREGAR URLS -->
+<div class="card" style="margin-top:18px;">
+<h3>Buscar alumno</h3>
+<div style="display:flex; gap:10px; flex-wrap:wrap;">
+<input id="rutBuscar" placeholder="RUT (sin puntos ni guión) ej: 123456789" style="flex:1; min-width:220px;"/>
+<button class="btn btn-primary" id="btnBuscar" type="button">Buscar</button>
+</div>
+<div id="alumnoInfo" style="margin-top:12px;"></div>
+<hr style="margin:16px 0; opacity:.25;"/>
+<h3>Agregar documento (URL)</h3>
+<p class="admin-note">Pega enlaces de Google Drive / Dropbox / OneDrive (modo gratis).</p>
+<input id="docNombre" placeholder="Nombre del documento (ej: Malla Supervisor Izaje)"/>
+<input id="docUrl" placeholder="URL del PDF (https://...)"/>
+<button class="btn btn-primary" id="btnAgregarDoc" style="margin-top:10px;" type="button">
+          Agregar
+        </button>
+<p class="portal-mensaje" id="adminMsg" style="margin-top:12px;"></p>
+<div id="docsList" style="margin-top:14px;"></div>
+</div>
+<!-- BLOQUE B: CREAR/ACTUALIZAR ALUMNO (SIN SUBIR PDFs) -->
+<main class="admin-wrap" style="padding:0; margin-top:18px;">
+<div class="admin-card">
+<h2>Crear / actualizar alumno</h2>
+<p class="admin-note">
+            Esto es para que el alumno pueda entrar al portal con su <strong>RUT + clave</strong>.
+            Los documentos se agregan arriba por <strong>URL</strong>.
+          </p>
+<form id="admin-form">
+<div class="admin-grid">
+<div>
+<label for="rut">RUT (con puntos y guión)</label>
+<input id="rut" placeholder="12.345.678-9" required="" type="text"/>
+</div>
+<div>
+<label for="clave">Clave</label>
+<input id="clave" placeholder="Ej: Forja2025!" required="" type="text"/>
+</div>
+<div class="full">
+<label for="nombre">Nombre alumno</label>
+<input id="nombre" placeholder="Nombre Apellido" required="" type="text"/>
+</div>
+</div>
+<!-- Plan A: inputs de PDF ocultos para NO romper el JS actual -->
+<div aria-hidden="true" class="hidden-storage">
+<label for="malla">Malla curricular (PDF)</label>
+<input accept="application/pdf" id="malla" type="file"/>
+<label for="certificado">Certificado (PDF)</label>
+<input accept="application/pdf" id="certificado" type="file"/>
+</div>
+<div class="admin-actions">
+<button class="btn btn-primary" type="submit">
+<i class="fa-solid fa-user-check"></i> Guardar alumno
+              </button>
+<button class="btn btn-outline" id="btn-limpiar" type="button">
+                Limpiar
+              </button>
+</div>
+<div class="admin-msg" id="adminFormMsg">Listo para cargar.</div>
+</form>
+</div>
+</main>
+</div>
+</section>
+<footer class="main-footer">
+<p class="footer-slogan">Forjamos expertos, Construimos Futuros</p><p class="footer-copy">© Forja Laboral OTEC Chile. Admin (MVP).</p>
+</footer>
+<!-- JS ADMIN -->
+<script src="admin-urls.js" type="module"></script>
+
+<script>
+  const ADMIN_WEB_PASSWORD = "forja2026segura";
+  const ADMIN_SESSION_KEY = "forja_admin_web_access";
+
+  function unlockAdminPanel() {
+    document.body.classList.remove("admin-locked");
+    const gate = document.getElementById("adminAccessGate");
+    if (gate) gate.style.display = "none";
+
+    if (!document.getElementById("adminLogoutBtn")) {
+      const logout = document.createElement("button");
+      logout.id = "adminLogoutBtn";
+      logout.className = "admin-logout-btn";
+      logout.textContent = "Cerrar admin";
+      logout.addEventListener("click", function () {
+        sessionStorage.removeItem(ADMIN_SESSION_KEY);
+        location.reload();
+      });
+      document.body.appendChild(logout);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    if (sessionStorage.getItem(ADMIN_SESSION_KEY) === "ok") {
+      unlockAdminPanel();
+      return;
+    }
+
+    const form = document.getElementById("adminGateForm");
+    const input = document.getElementById("adminGatePassword");
+    const error = document.getElementById("adminGateError");
+
+    if (form) {
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (input.value.trim() === ADMIN_WEB_PASSWORD) {
+          sessionStorage.setItem(ADMIN_SESSION_KEY, "ok");
+          unlockAdminPanel();
+        } else {
+          error.style.display = "block";
+          input.value = "";
+          input.focus();
+        }
+      });
+    }
+  });
+</script>
+
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/service-worker.js').catch(()=>{});}</script>
+</body>
+</html>

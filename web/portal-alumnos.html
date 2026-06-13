@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<title>Portal de alumnos – OTEC Forja Laboral Chile</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<link href="styles.css" rel="stylesheet"/>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#b68b2c">
+</head>
+<body class="page-portal">
+<header class="main-header">
+<div class="logo">
+  <img src="img/logofinal.jpg" class="logo-img-full" alt="OTEC Forja Laboral Chile">
+  <div class="logo-text">
+    <span class="logo-title">OTEC Forja</span>
+    <span class="logo-subtitle">Laboral Chile</span>
+  </div>
+</div>
+<button aria-expanded="false" aria-label="Abrir menú" class="nav-toggle" type="button">
+<i class="fa-solid fa-bars"></i>
+</button>
+<nav class="main-nav" aria-label="Menú principal">
+<a href="index.html#inicio">Inicio</a>
+<a href="index.html#nosotros">Nosotros</a>
+<a href="cursos.html">Cursos</a>
+<a href="portal-alumnos.html">Portal alumnos</a>
+<a href="index.html#contacto">Contacto</a>
+<a class="nav-verify" href="verificar-certificado.html">Verificar certificado</a>
+</nav>
+</header>
+<section class="page-hero page-hero-portal">
+<div class="page-hero-inner">
+<h1>Portal de alumnos</h1>
+<p>Ingresa con tu RUT y clave para revisar documentos disponibles. Para verificar certificados emitidos, utiliza el sistema digital de validación.</p>
+<div class="hero-buttons page-actions"><a class="btn btn-verify" href="verificar-certificado.html">Verificar certificado</a></div>
+</div>
+</section>
+<main class="portal-wrapper">
+<div class="portal-container">
+<!-- LOGIN -->
+<section class="portal-box portal-login" data-panel="login">
+<h2>Ingreso de Alumno</h2>
+<form data-form="login" id="portal-form">
+<label for="rut">RUT</label>
+<input id="rut" name="rut" placeholder="12.345.678-9" required="" type="text"/>
+<label for="clave">Clave</label>
+<input id="clave" name="clave" placeholder="Tu clave" required="" type="password"/>
+<button class="btn btn-primary" type="submit">
+<i class="fa-solid fa-lock"></i> Entrar
+          </button>
+</form>
+<p class="portal-hint">Ingresa con tus datos para ver tus documentos.</p>
+<a class="portal-recuperar" data-action="recuperar" href="#">¿Olvidaste tu clave?</a>
+</section>
+<!-- PANEL ALUMNO -->
+<section class="portal-box portal-output panel--hidden" data-panel="alumno">
+<h2>Bienvenido, <span data-field="nombre">Alumno</span></h2>
+<p class="portal-mensaje" id="portal-mensaje">
+          Aquí podrás descargar tu malla curricular y tus certificados vigentes.
+        </p>
+<h3>Documentos disponibles</h3>
+<div class="portal-documentos" data-docs=""></div>
+<div style="margin-top:14px;">
+<button class="btn btn-outline" data-action="salir" type="button">
+<i class="fa-solid fa-right-from-bracket"></i> Salir
+          </button>
+</div>
+</section>
+</div>
+</main>
+<footer class="main-footer">
+<div class="footer-top">
+<div class="footer-logos">
+
+  <img alt="Logo SENCE" src="img/logo-sence.png"/>
+
+  <img alt="Norma Chilena NCh 2728" src="img/logo-nch.png"/>
+
+  <img alt="Forja Laboral OTEC Chile" src="img/logofinal.jpg"/>
+
+</div>
+<div class="footer-social"><a aria-label="Instagram" href="https://www.instagram.com/forjalaboralchile/" rel="noopener" target="_blank"><i class="fa-brands fa-instagram"></i></a><a aria-label="Facebook" href="https://www.facebook.com/profile.php?id=61579720320634&amp;locale=es_LA" rel="noopener" target="_blank"><i class="fa-brands fa-facebook"></i></a><a aria-label="Discord" href="https://discord.gg/4DdBPNGK" rel="noopener" target="_blank"><i class="fa-brands fa-discord"></i></a></div>
+</div>
+<p class="footer-slogan">Forjamos expertos, Construimos Futuros</p><p class="footer-links"><a href="verificar-certificado.html">Verificar certificado</a> · <a href="cursos.html">Cursos</a> · <a href="portal-alumnos.html">Portal alumnos</a></p><p class="footer-copy">© Forja Laboral OTEC Chile. Todos los derechos reservados.</p>
+</footer>
+<a aria-label="WhatsApp Forja Laboral" class="whatsapp-float" href="https://wa.me/56948077742" rel="noopener" target="_blank">
+<i class="fa-brands fa-whatsapp"></i>
+</a>
+<!-- Firebase (Firestore) para el portal -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    // ✅ Usa la MISMA config que tu admin (misma app/proyecto)
+    const firebaseConfig = {
+      apiKey: "AIzaSyDkHZzbWGdhGYm7SdC6HbQMiCFlItWnP78",
+      authDomain: "forja-laboral-otec-chile.firebaseapp.com",
+      projectId: "forja-laboral-otec-chile",
+      storageBucket: "forja-laboral-otec-chile.firebasestorage.app",
+      messagingSenderId: "420373310622",
+      appId: "1:420373310622:web:042018f7f5c850ea799f8f",
+      measurementId: "G-VC24Z4352S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Exponer para script.js (portal)
+    window.db = db;
+    window.firestoreDoc = doc;
+    window.firestoreGetDoc = getDoc;
+  </script>
+<!-- JS general (incluye login portal + menú + etc.) -->
+<script src="script.js"></script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/service-worker.js').catch(()=>{});}</script>
+</body>
+</html>

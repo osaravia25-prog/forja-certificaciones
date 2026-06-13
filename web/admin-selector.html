@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administración Forja Laboral</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(135deg, rgba(15,23,42,.94), rgba(30,41,59,.88)),
+        url('/img/fondo-mineria.png') center/cover no-repeat;
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+    .wrap {
+      width: min(920px, 100%);
+      background: rgba(255,255,255,.96);
+      border-radius: 26px;
+      padding: 30px;
+      box-shadow: 0 24px 70px rgba(0,0,0,.36);
+    }
+    .logo {
+      display: block;
+      max-width: 170px;
+      margin: 0 auto 16px;
+    }
+    h1 {
+      text-align: center;
+      color: #0f172a;
+      margin: 0 0 10px;
+      font-size: clamp(30px, 4vw, 46px);
+    }
+    .sub {
+      text-align: center;
+      color: #475569;
+      margin: 0 auto 28px;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .card {
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 24px;
+      background: #f8fafc;
+    }
+    .card h2 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 1.4rem;
+    }
+    .card p {
+      color: #475569;
+      line-height: 1.55;
+      min-height: 74px;
+    }
+    .btn {
+      display: inline-block;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      padding: 14px 18px;
+      border-radius: 14px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+    .primary {
+      background: #b68b2c;
+      color: #111827;
+    }
+    .dark {
+      background: #111827;
+      color: #fff;
+    }
+    .links {
+      margin-top: 22px;
+      text-align: center;
+    }
+    .links a {
+      color: #0f172a;
+      font-weight: 800;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    @media (max-width: 720px) {
+      .grid { grid-template-columns: 1fr; }
+      .wrap { padding: 22px; }
+    }
+  </style>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#b68b2c">
+</head>
+<body>
+  <main class="wrap">
+    <img class="logo" src="/img/logo_forja_sin_fondo.png" alt="Forja Laboral">
+    <h1>Administración Forja</h1>
+    <p class="sub">
+      Selecciona el panel que necesitas. El panel de certificación emite certificados oficiales con QR.
+      El panel del portal alumnos permite cargar alumnos generales y documentos PDF.
+    </p>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Admin certificación</h2>
+        <p>Crear certificados digitales, generar códigos QR, descargar PDF y revisar certificados emitidos.</p>
+        <a class="btn primary" href="/login-certificados">Entrar a certificación</a>
+      </article>
+
+      <article class="card">
+        <h2>Admin portal alumnos</h2>
+        <p>Gestionar alumnos del portal, claves de acceso y carga de documentos PDF para consulta interna.</p>
+        <a class="btn dark" href="/login-portal">Entrar al portal admin</a>
+      </article>
+    </section>
+
+    <div class="links">
+      <a href="/">Web pública</a>
+      <a href="/portal-alumnos.html">Portal alumnos</a>
+      <a href="/verificar-certificado.html">Verificar certificado</a>
+    </div>
+  </main>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/service-worker.js').catch(()=>{});}</script>
+</body>
+</html>

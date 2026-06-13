@@ -1,0 +1,21 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // PDFs de alumnos
+    match /alumnos/{rut}/documentos/{archivo} {
+
+      // Cualquiera puede descargar
+      allow read: if true;
+
+      // NADIE puede subir desde fuera (solo Admin vía Firebase SDK)
+      allow write: if false;
+    }
+
+    // Todo lo demás bloqueado
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

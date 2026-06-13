@@ -1,0 +1,24 @@
+FORJA WEB SEGURA - CAMBIOS APLICADOS
+
+1) La web pública ya NO dirige al panel administrador del sistema de certificación.
+
+2) El botón "Verificar certificado" ahora abre:
+   verificar-certificado.html
+
+3) Esa página permite ingresar solo el código del certificado y redirige a:
+   https://forja-certificaciones.onrender.com/verificar/CODIGO
+
+4) El panel de certificación de Render queda privado:
+   https://forja-certificaciones.onrender.com/admin?key=CLAVE_PRIVADA
+
+5) El admin web original sigue existiendo para uso interno:
+   admin.html
+   Sirve para alumnos generales/documentos del portal, no para crear certificados oficiales.
+
+6) Los alumnos deben usar:
+   portal-alumnos.html
+   verificar-certificado.html
+
+7) Para subir a Netlify:
+   - Descomprimir este ZIP.
+   - Arrastrar la carpeta completa a Deploys en Netlify.

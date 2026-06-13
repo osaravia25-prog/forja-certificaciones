@@ -1,0 +1,20 @@
+WEB FORJA - ADMIN PROTEGIDO
+
+Se modificó admin.html para pedir clave antes de mostrar el panel.
+
+URL admin:
+admin.html
+
+Clave actual:
+forja2026segura
+
+IMPORTANTE:
+Esta protección es básica para Netlify/sitio estático. Sirve para evitar acceso casual.
+Para seguridad profesional real, se recomienda usar Firebase Auth, Netlify Identity o mover el admin a backend.
+
+Para cambiar la clave:
+1) Abrir admin.html
+2) Buscar:
+   const ADMIN_WEB_PASSWORD = "forja2026segura";
+3) Cambiar el valor entre comillas.
+4) Subir nuevamente a Netlify.

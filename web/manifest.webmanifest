@@ -1,0 +1,16 @@
+{
+  "name": "OTEC Forja Laboral Chile",
+  "short_name": "Forja Laboral",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#b68b2c",
+  "description": "Capacitación, portal alumnos y certificación digital QR.",
+  "icons": [
+    {
+      "src": "/img/logo_forja_sin_fondo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
