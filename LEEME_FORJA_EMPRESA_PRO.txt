@@ -1,0 +1,88 @@
+FORJA EMPRESA PRO 2026
+
+Versión creada usando todo el contenido del ZIP base.
+
+INCLUYE
+- Web pública OTEC Forja Laboral
+- Portal alumnos
+- Admin portal alumnos para subir PDF y gestionar alumnos generales
+- Sistema de certificación digital integrado
+- Login administrador profesional
+- Dashboard ejecutivo con Chart.js
+- Certificados QR y PDF
+- Cambio de estado: VIGENTE / VENCIDO / REVOCADO
+- Exportación CSV
+- API interna JSON
+- Auditoría de acciones
+- PWA instalable
+- SEO básico: manifest, robots.txt, sitemap.xml
+- Render ready con gunicorn
+- Estructura compatible con dominio profesional
+
+RUTAS PRINCIPALES
+
+Web pública:
+http://127.0.0.1:5000/
+
+Selector administración:
+http://127.0.0.1:5000/administracion
+
+Admin certificados:
+http://127.0.0.1:5000/login-certificados
+
+Admin portal alumnos / PDFs:
+http://127.0.0.1:5000/login-portal
+
+Dashboard:
+http://127.0.0.1:5000/dashboard
+
+Portal alumnos:
+http://127.0.0.1:5000/portal-alumnos.html
+
+Verificador público:
+http://127.0.0.1:5000/verificar-certificado.html
+
+CREDENCIALES LOCALES
+Usuario certificados:
+admin
+
+Clave:
+forja2026segura
+
+Clave admin portal:
+forja2026segura
+
+CÓMO CORRER EN TU PC
+
+1) Abre esta carpeta en el explorador.
+2) En la barra de dirección escribe:
+cmd
+
+3) Ejecuta:
+py -3.12 -m pip install -r requirements.txt
+
+4) Ejecuta:
+py -3.12 app.py
+
+5) Abre:
+http://127.0.0.1:5000
+
+PARA SUBIR A RENDER
+
+Build Command:
+pip install -r requirements.txt
+
+Start Command:
+gunicorn app:app
+
+VARIABLES EN RENDER
+ADMIN_USER=admin
+ADMIN_PASSWORD=CAMBIA_ESTA_CLAVE
+SECRET_KEY=CLAVE_LARGA_SEGURA
+APP_BASE_URL=https://tu-dominio-o-render.onrender.com
+
+IMPORTANTE
+- Los alumnos NO deben entrar a /login-certificados ni /login-portal.
+- Los alumnos usan /portal-alumnos.html y /verificar-certificado.html.
+- Para empresa real, cambiar ADMIN_PASSWORD y SECRET_KEY antes de publicar.
+- Si usas dominio propio, cambia APP_BASE_URL para que el QR apunte al dominio correcto.

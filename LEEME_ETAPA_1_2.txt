@@ -1,0 +1,36 @@
+FORJA EMPRESA PRO - ETAPA 1 + 2
+
+Cambios aplicados:
+1) Portal alumnos migrado a Flask/SQLite.
+2) Admin portal ya no depende del admin.html estático.
+3) /login-portal muestra solo login.
+4) /admin-portal muestra panel interno real.
+5) /portal-alumnos.html ahora abre portal alumno con RUT + clave.
+6) Admin certificados protegido con sesión Flask.
+7) Cierre de sesión separado:
+   /logout para certificados
+   /logout-portal para portal alumnos
+8) Menú público sin enlace visible a Admin.
+9) Variables soportadas:
+   ADMIN_USER
+   ADMIN_PASSWORD
+   PORTAL_ADMIN_USER
+   PORTAL_ADMIN_PASSWORD
+   SECRET_KEY
+   APP_BASE_URL
+   SESSION_MINUTES
+
+Rutas:
+http://127.0.0.1:5000/
+http://127.0.0.1:5000/administracion
+http://127.0.0.1:5000/login-certificados
+http://127.0.0.1:5000/login-portal
+http://127.0.0.1:5000/portal-alumnos.html
+
+Credenciales locales:
+Usuario: admin
+Contraseña: forja2026segura
+
+Ejecutar:
+py -3.12 -m pip install -r requirements.txt
+py -3.12 app.py

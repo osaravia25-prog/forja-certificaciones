@@ -1,0 +1,56 @@
+FORJA - DOBLE PANEL ADMINISTRADOR
+
+Este proyecto ahora separa claramente los paneles:
+
+1) Administrador de certificación
+URL:
+http://127.0.0.1:5000/login-certificados
+
+Sirve para:
+- Crear certificados digitales
+- Generar QR
+- Descargar PDF certificado
+- Ver certificados emitidos
+
+Usuario:
+admin
+
+Contraseña:
+forja2026segura
+
+
+2) Administrador portal alumnos
+URL:
+http://127.0.0.1:5000/login-portal
+
+Sirve para:
+- Crear alumnos generales del portal
+- Asignar claves
+- Subir documentos PDF
+- Gestionar contenido del portal alumnos
+
+Clave:
+forja2026segura
+
+
+3) Selector de administración
+URL:
+http://127.0.0.1:5000/administracion
+
+Desde ahí eliges:
+- Admin certificación
+- Admin portal alumnos
+
+
+4) Alumno
+URL:
+http://127.0.0.1:5000/portal-alumnos.html
+
+
+5) Verificación pública
+URL:
+http://127.0.0.1:5000/verificar-certificado.html
+
+
+IMPORTANTE:
+Los alumnos NO deben entrar a /login-certificados ni /login-portal.

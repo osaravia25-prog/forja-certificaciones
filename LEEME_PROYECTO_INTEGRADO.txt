@@ -1,0 +1,74 @@
+FORJA FULLSTACK INTEGRADO
+
+Este proyecto une en una sola aplicación:
+
+1) Página web Forja Laboral
+   - index.html
+   - cursos.html
+   - portal-alumnos.html
+   - verificar-certificado.html
+   - admin.html protegido con clave
+
+2) Sistema de certificación digital
+   - Flask + Python
+   - SQLite
+   - QR automático
+   - PDF descargable
+   - Panel administrador privado
+   - Validación pública de certificados
+
+TECNOLOGÍAS INTEGRADAS:
+- HTML5
+- CSS3
+- JavaScript
+- Python
+- Flask
+- SQLite
+- QRCode
+- ReportLab PDF
+- Gunicorn
+- Render-ready
+- Netlify/Firebase files conservados como referencia
+- Diseño responsive
+- Panel admin web protegido
+- Verificación pública por código
+
+CÓMO EJECUTAR EN PC:
+
+1) Abrir esta carpeta en VS Code.
+2) Terminal:
+
+   py -3.12 -m pip install -r requirements.txt
+   py -3.12 app.py
+
+3) Abrir:
+
+   http://127.0.0.1:5000
+
+PÁGINAS PRINCIPALES:
+
+Web pública:
+   http://127.0.0.1:5000/
+
+Cursos:
+   http://127.0.0.1:5000/cursos.html
+
+Portal alumnos:
+   http://127.0.0.1:5000/portal-alumnos.html
+
+Verificar certificado:
+   http://127.0.0.1:5000/verificar-certificado.html
+
+Admin web interno:
+   http://127.0.0.1:5000/admin.html
+   Clave: forja2026segura
+
+Admin certificación:
+   http://127.0.0.1:5000/admin?key=forja2026segura
+
+IMPORTANTE:
+- Los alumnos NO deben entrar al admin de certificación.
+- Los alumnos usan portal-alumnos.html o verificar-certificado.html.
+- El panel /admin?key=... es solo para administrador FORJA.
+- Para subir a Render, conectar este proyecto a GitHub y usar render.yaml.
+- En Render agregar variable APP_BASE_URL con el dominio final.

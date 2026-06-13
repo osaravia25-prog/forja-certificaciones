@@ -1,0 +1,45 @@
+FORJA FULLSTACK EMPRESA - LOGIN PROFESIONAL
+
+Proyecto integrado:
+- Página web Forja Laboral
+- Portal alumnos
+- Verificación pública de certificados
+- Sistema de certificación digital
+- Panel administrador protegido con login real de Flask
+
+RUTAS:
+
+Web pública:
+http://127.0.0.1:5000/
+
+Verificar certificado:
+http://127.0.0.1:5000/verificar-certificado.html
+
+Login administrador:
+http://127.0.0.1:5000/login
+
+Panel administrador certificado:
+http://127.0.0.1:5000/admin
+
+Cerrar sesión:
+http://127.0.0.1:5000/logout
+
+CREDENCIALES LOCALES:
+Usuario: admin
+Contraseña: forja2026segura
+
+CÓMO EJECUTAR:
+py -3.12 -m pip install -r requirements.txt
+py -3.12 app.py
+
+VARIABLES RECOMENDADAS EN RENDER:
+ADMIN_USER=admin
+ADMIN_PASSWORD=una-clave-fuerte
+SECRET_KEY=una-clave-secreta-larga
+APP_BASE_URL=https://tu-dominio.com
+
+IMPORTANTE:
+- No usar /admin?key=... para empresa.
+- Los alumnos NO entran al admin.
+- Los alumnos usan verificar-certificado.html o QR.
+- Para producción, cambiar ADMIN_PASSWORD y SECRET_KEY en Render.
